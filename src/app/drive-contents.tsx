@@ -10,6 +10,8 @@ export default function DriveContents(props: {
   files: (typeof files.$inferSelect)[];
   folders: (typeof folders.$inferSelect)[];
 }) {
+  console.log("Hello world!");
+
   const [currentFolder, setCurrentFolder] = useState<number>(1);
 
   const handleFolderClick = (folderId: number) => {
