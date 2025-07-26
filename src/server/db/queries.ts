@@ -74,6 +74,17 @@ export const MUTATIONS = {
       ownerId: input.userId,
     });
   },
+  createFolder: async function (
+    parentId: number,
+    name: string,
+    userId: string,
+  ) {
+    await db.insert(folders_table).values({
+      name,
+      parent: parentId,
+      ownerId: userId,
+    });
+  },
   onboardUser: async function (userId: string) {
     const rootFolder = await db
       .insert(folders_table)

@@ -1,6 +1,6 @@
 "use client";
 
-import { Upload, ChevronRight } from "lucide-react";
+import { Upload, ChevronRight, PlusIcon } from "lucide-react";
 import { FileRow, FolderRow } from "./file-row";
 import type { files_table, folders_table } from "~/server/db/schema";
 import Link from "next/link";
@@ -13,6 +13,8 @@ import {
 } from "@clerk/nextjs";
 import { UploadButton } from "~/components/uploadthing";
 import { useRouter } from "next/navigation";
+import { Button } from "~/components/ui/button";
+import { createFolder } from "~/server/actions";
 
 export default function DriveContents(props: {
   files: (typeof files_table.$inferSelect)[];
@@ -69,6 +71,21 @@ export default function DriveContents(props: {
               <FileRow key={file.id} file={file} />
             ))}
           </ul>
+          <div className="border-t border-gray-700 px-6 py-4">
+            <Button
+              variant="default"
+              className="flex cursor-pointer items-center gap-2 rounded-md bg-blue-600 px-4 py-2 font-medium text-white shadow-sm transition-colors duration-200 hover:bg-blue-700 hover:shadow-md"
+              onClick={async () => {
+                const name = prompt("Enter a name for the new folder");
+                if (name) {
+                  await createFolder(props.currentFolderId, name);
+                }
+              }}
+            >
+              <PlusIcon size={18} />
+              New Folder
+            </Button>
+          </div>
         </div>
         <UploadButton
           endpoint="driveUploader"
